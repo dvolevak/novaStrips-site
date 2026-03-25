@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaStrips - Breathe Better. Perform Better.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e90ff;
+            --primary-dark: #0066cc;
+            --accent: #00d4ff;
+            --success: #2ecc71;
+            --dark: #0a0a0a;
+            --dark-secondary: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border: rgba(30, 144, 255, 0.2);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-secondary) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(30, 144, 255, 0.3), 0 8px 25px rgba(30, 144, 255, 0.15); }
+            50% { box-shadow: 0 0 30px rgba(30, 144, 255, 0.5), 0 8px 35px rgba(30, 144, 255, 0.25); }
+        }
+
+        header {
+            padding: 15px 0;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            animation: slideInDown 0.5s ease;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 144, 255, 0.4);
+        }
+
+        .hero {
+            padding: 180px 20px 100px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(30, 144, 255, 0.15) 0%, rgba(0, 212, 255, 0.08) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(30, 144, 255, 0.1) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+            bottom: -50px;
+            left: -50px;
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: slideInUp 0.8s ease 0.2s both;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(30, 144, 255, 0.1);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            margin-bottom: 20px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(30, 144, 255, 0.3);
+            text-decoration: none;
+            display: inline-block;
+            animation: glow 2s ease infinite;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(30, 144, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            padding: 18px 40px;
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .trust-badge span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 100px 20px;
+        }
+
+        .section h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            animation: slideInUp 0.8s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 100px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.08), rgba(0, 212, 255, 0.04));
+            padding: 40px 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: slideInUp 0.8s ease backwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(0, 212, 255, 0.08));
+            transform: translateY(-8px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.1), rgba(0, 212, 255, 0.05));
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 0.8s ease backwards;
+        }
+
+        .testimonial-card:nth-child(1) { animation-delay: 0.1s; }
+        .testimonial-card:nth-child(2) { animation-delay: 0.2s; }
+        .testimonial-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .testimonial-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px);
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.15), rgba(0, 212, 255, 0.1));
+        }
+
+        .rating {
+            color: #ffd700;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .testimonial-text {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .price-card {
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.08), rgba(0, 212, 255, 0.04));
+            padding: 45px;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            animation: slideInUp 0.8s ease backwards;
+        }
+
+        .price-card:nth-child(1) { animation-delay: 0.1s; }
+        .price-card:nth-child(2) { animation-delay: 0.2s; }
+        .price-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .price-card:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.15), rgba(0, 212, 255, 0.1));
+            transform: translateY(-12px);
+        }
+
+        .price-card.featured {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.15), rgba(0, 212, 255, 0.1));
+            transform: scale(1.05);
+        }
+
+        .price-card.featured:hover {
+            transform: scale(1.05) translateY(-12px);
+        }
+
+        .best-value-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--dark);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3);
+        }
+
+        .price-card h3 {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: var(--text-primary);
+        }
+
+        .price-amount {
+            font-size: 3rem;
+            color: var(--accent);
+            font-weight: 900;
+            margin: 15px 0;
+        }
+
+        .price-currency {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .price-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin: 15px 0;
+        }
+
+        .price-card button {
+            width: 100%;
+            margin-top: 25px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .benefit-card {
+            padding: 30px;
+            background: rgba(30, 144, 255, 0.08);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: slideInUp 0.8s ease backwards;
+        }
+
+        .benefit-card:nth-child(1) { animation-delay: 0.1s; }
+        .benefit-card:nth-child(2) { animation-delay: 0.2s; }
+        .benefit-card:nth-child(3) { animation-delay: 0.3s; }
+        .benefit-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .benefit-card:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.15), rgba(0, 212, 255, 0.08));
+            transform: translateY(-8px);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .benefit-card:nth-child(2) .benefit-icon { animation-delay: -0.5s; }
+        .benefit-card:nth-child(3) .benefit-icon { animation-delay: -1s; }
+        .benefit-card:nth-child(4) .benefit-icon { animation-delay: -1.5s; }
+
+        .benefit-card h3 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+            position: relative;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 30px;
+            animation: slideInUp 0.8s ease backwards;
+        }
+
+        .step-card:nth-child(1) { animation-delay: 0.1s; }
+        .step-card:nth-child(2) { animation-delay: 0.2s; }
+        .step-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .step-number {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 900;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(30, 144, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover .step-number {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(30, 144, 255, 0.5);
+        }
+
+        .step-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .step-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.15), rgba(0, 212, 255, 0.08));
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 80px 40px;
+            text-align: center;
+            margin-top: 100px;
+            animation: slideInUp 0.8s ease;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        footer {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        footer p {
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 120px 20px 60px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .price-card.featured {
+                transform: scale(1);
+            }
+
+            .price-card.featured:hover {
+                transform: translateY(-12px);
+            }
+
+            .cta-section {
+                padding: 50px 30px;
+            }
+
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .stat-card, .price-card, .benefit-card {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">NovaStrips™</div>
+            <button class="nav-cta" onclick="goToInstagram()">Shop Now</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">✨ Trusted by athletes worldwide</div>
+            <h1>Breathe Better.<br>Perform Better.</h1>
+            <p>Unlock your full breathing potential instantly. NovaStrips scientifically opens your nasal passages for better sleep, reduced snoring, and enhanced athletic performance.</p>
+            <div class="hero-ctas">
+                <button class="btn-primary" onclick="goToInstagram()">Order on Instagram</button>
+                <button class="btn-secondary">Learn More</button>
+            </div>
+            <div class="trust-badge">
+                <span>⭐ 4.9/5 Stars</span>
+                <span>•</span>
+                <span>🚀 1000+ Happy Customers</span>
+                <span>•</span>
+                <span>📦 Fast Shipping</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">80%</div>
+                    <div class="stat-label">Better Sleep</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">70%</div>
+                    <div class="stat-label">Better Sports Performance</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Loved by Athletes</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="rating">★★★★★</div>
+                    <p class="testimonial-text">"I sleep better and train harder! NovaStrips completely transformed my training routine. The difference is instant."</p>
+                    <div class="testimonial-author">- Marcus, Professional Athlete</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="rating">★★★★★</div>
+                    <p class="testimonial-text">"Instant difference in breathing. I noticed the improvement from the first use. Highly recommend to everyone!"</p>
+                    <div class="testimonial-author">- Sarah, Fitness Coach</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="rating">★★★★★</div>
+                    <p class="testimonial-text">"Best purchase ever. My snoring is completely gone and my sleep quality improved significantly. Life-changing!"</p>
+                    <div class="testimonial-author">- David, Better Sleep</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Choose Your Perfect Pack</h2>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h3>Starter</h3>
+                    <div class="price-amount"><span class="price-currency">ден</span> 449</div>
+                    <p class="price-description">30 Premium Strips</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">~1 month supply</p>
+                    <button class="btn-primary" onclick="goToInstagram()">Order Now</button>
+                </div>
+                <div class="price-card">
+                    <h3>Popular</h3>
+                    <div class="price-amount"><span class="price-currency">ден</span> 749</div>
+                    <p class="price-description">60 Premium Strips</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">~2 months supply</p>
+                    <button class="btn-primary" onclick="goToInstagram()">Order Now</button>
+                </div>
+                <div class="price-card featured">
+                    <div class="best-value-badge">BEST VALUE</div>
+                    <h3>Premium</h3>
+                    <div class="price-amount"><span class="price-currency">ден</span> 1,199</div>
+                    <p class="price-description">90 Premium Strips</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">~3 months supply • SAVE 22%</p>
+                    <button class="btn-primary" onclick="goToInstagram()">Order Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Why NovaStrips?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">😴</div>
+                    <h3>Sleep Deeper</h3>
+                    <p>Wake up refreshed and energized every single morning with superior breathing during sleep.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔇</div>
+                    <h3>Reduce Snoring</h3>
+                    <p>Say goodbye to snoring and enjoy peaceful, quiet nights. Better sleep for you and your partner.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💪</div>
+                    <h3>Train Harder</h3>
+                    <p>Maximize oxygen intake during workouts. Enhance athletic performance and endurance instantly.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>More Energy</h3>
+                    <p>Feel energized throughout the day with improved oxygen circulation and better recovery.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Apply</h4>
+                    <p>Simply apply NovaStrips to your nose before sleep or workout in seconds. Easy, mess-free application.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Lift & Open</h4>
+                    <p>The strips gently lift your nasal passages, opening your airways for maximum airflow instantly.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Breathe Better</h4>
+                    <p>Experience improved breathing and better performance immediately. Feel the difference within seconds!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="cta-section">
+                <h2>Ready to Transform Your Breathing?</h2>
+                <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 30px;">Join 1000+ satisfied customers experiencing better sleep and enhanced performance.</p>
+                <button class="btn-primary" style="font-size: 18px; padding: 20px 50px;" onclick="goToInstagram()">Order on Instagram Now</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p style="font-size: 1rem; font-weight: 600;">NovaStrips™ - Breathe Better. Perform Better.</p>
+            <p>📱 Message us on Instagram @novaStrips.mk</p>
+            <p>&copy; 2024 NovaStrips. All rights reserved. | Premium Breathing Solutions</p>
+        </div>
+    </footer>
+
+    <script>
+        function goToInstagram() {
+            window.open('https://www.instagram.com/novaStrips.mk', '_blank');
+        }
+    </script>
+</body>
+</html>
